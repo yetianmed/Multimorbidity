@@ -211,7 +211,10 @@ for (kk in 1:length(ns)) {
       logLik_value <- logLik(fit$model)
       AIC_value <- AIC(fit$model)
       BIC_value <- BIC(fit$model)
-      
+      cov_beta<-fit$model$coefficients
+      var<-vcov(fit$model, conditional=TRUE, thread=1, log_space=FALSE)
+      cov_se<-sqrt(diag(var))
+                               
       # Write everything to one MAT file
       cluster_args <- setNames(
         mget(paste0("Cluster_", 1:Number_of_clusters)),
@@ -227,7 +230,9 @@ for (kk in 1:length(ns)) {
           paths_compact_mat = paths_compact_mat,
           logLik_value = as.numeric(logLik_value),
           AIC_value = AIC_value,
-          BIC_value = BIC_value
+          BIC_value = BIC_value,
+          cov_beta=cov_beta,
+          cov_se=cov_se
         ),
         cluster_args
       )
