@@ -18,9 +18,9 @@ if (gender == 1) {
 
 source("~/compress_paths_multi.R")
 
-#Covariates guide cluster discovery 
+#Covariates guide cluster discovery. Covariates are provided in random numbers for 10 subjects.
 covariates <- read.csv("covariates.csv",
-                       na.strings = c("", "NA", "NaN", ".")) # subjects x covariates
+                       na.strings = c("", "NA", "NaN", ".")) # subjects x covariates. 
 str(covariates)
 
 #Impute missing values in covariates
@@ -41,8 +41,8 @@ print(paste("Number of Trial:",task_id))
 
 set.seed(NULL)
 
-# csv files showing cumulative LTC counts per category over each consecutive year from year 0 to year 90
-# see disease.csv for an example
+# csv files showing cumulative LTC counts per disease category over each consecutive year from year 0 to year 90
+# see disease.csv for an example showing how the data should be formatted. 
 files <- c(
   "Cardiovascular.csv",
   "Eye.csv",
@@ -212,7 +212,7 @@ for (kk in 1:length(ns)) {
       AIC_value <- AIC(fit$model)
       BIC_value <- BIC(fit$model)
       cov_beta <- fit$model$coefficients
-      var <- vcov(fit$model, thread=1, log_space=FALSE)
+      var <- vcov(fit$model, thread=4, log_space=FALSE)
       cov <- sqrt(diag(var_cond))
       
       # Write everything to one MAT file
